@@ -11,6 +11,13 @@ const login = async (email, password) => {
   return token;
 };
 
+const getAll = async () => {
+  const users = await User.findAll({
+    attributes: { exclude: ['password'] },
+  });
+  return users;
+};
+
 const create = async (infos) => {
   const { displayName, email, password, image } = infos;
   const userExists = await User.findOne({ where: { email } });
@@ -31,4 +38,5 @@ const create = async (infos) => {
 module.exports = {
   login,
   create,
+  getAll,
 };

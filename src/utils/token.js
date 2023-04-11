@@ -16,6 +16,17 @@ const generateToken = (payload) => {
   return token;
 };
 
+const validateToken = (token) => {
+  if (!token) throw new Error('Token not found');
+  try {
+    const validToken = jwt.verify(token, JWT_SECRET);
+    return validToken;
+  } catch (err) {
+    throw new Error('Expired or invalid token');
+  }
+};
+
 module.exports = {
   generateToken,
+  validateToken,
 };

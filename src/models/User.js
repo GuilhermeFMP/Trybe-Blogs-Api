@@ -6,7 +6,7 @@ const UserModel = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
-    display_name: {
+    displayName: {
       type: DataTypes.STRING(255),
     },
     email: {
