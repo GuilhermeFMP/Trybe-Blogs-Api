@@ -1,5 +1,10 @@
 const { Category } = require('../models');
 
+const getAll = async () => {
+  const users = await Category.findAll();
+  return users;
+};
+
 const create = async (cat) => {
   const { name } = cat;
 
@@ -12,4 +17,5 @@ const create = async (cat) => {
 
 module.exports = {
   create,
+  getAll,
 };
