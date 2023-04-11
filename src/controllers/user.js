@@ -9,6 +9,16 @@ const getAll = async (req, res) => {
   }
 };
 
+const getById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await userService.getById(+id);
+    return res.status(200).json(user);
+  } catch (err) {
+    return res.status(404).json({ message: err.message });
+  } 
+};
+
 const create = async (req, res) => {
   try {
     const newUser = await userService.create(req.body);
@@ -21,4 +31,5 @@ const create = async (req, res) => {
 module.exports = {
   create,
   getAll,
+  getById,
 };

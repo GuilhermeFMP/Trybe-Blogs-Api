@@ -9,6 +9,12 @@ userRoute.get(
   userController.getAll,
 );
 
+userRoute.get(
+  '/:id',
+  userTokenVerify.authToken,
+  userController.getById,
+);
+
 userRoute.post(
   '/',
   userMiddleware.createUserVerify,
