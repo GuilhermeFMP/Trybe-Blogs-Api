@@ -32,8 +32,22 @@ const create = async (req, res) => {
   }
 };
 
+const editPost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user.id;
+    const { title, content } = req.body;
+    const editedPost = await postService.editPost(userId, id, title, content);
+    if (!editedPost) return res.status(401).json({ message: 'Unauthorized user' });
+    return res.status(200).json(editedPost);
+  } catch (err) {
+    return res.status(400).json({ message: err.message });
+  }
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  editPost,
 };

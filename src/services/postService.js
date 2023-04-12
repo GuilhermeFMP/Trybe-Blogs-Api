@@ -60,8 +60,30 @@ const create = async ({ title, content, categoryIds }, token) => {
   return newPost;
 };
 
+const editPost = async (userId, id, title, content) => {
+  await BlogPost.update(
+    { title, content, updated: new Date() },
+    { where: { userId, id } },
+  );
+  const posts = await BlogPost.findOne({
+    where: { userId, id },
+    include: [{ model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      },
+      {
+        model: Category,
+        as: 'categories',
+        through: { attributes: [] },
+      },
+    ],
+  });
+  return posts;
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  editPost,
 };
