@@ -4,7 +4,6 @@ const PostCategoryModel = (sequelize, DataTypes) => {
       allowNull: false,
       foreignKey: true,
       primaryKey: true,
-      field: 'post_id',
       type: DataTypes.INTEGER,
       references: {
         model: 'BlogPost',
@@ -15,7 +14,6 @@ const PostCategoryModel = (sequelize, DataTypes) => {
       allowNull: false,
       foreignKey: true,
       primaryKey: true,
-      field: 'category_id',
       type: DataTypes.INTEGER,
       references: {
         model: 'Category',
@@ -30,14 +28,16 @@ const PostCategoryModel = (sequelize, DataTypes) => {
   });
 
   PostCategory.associate = (models) => {
-    models.BlogPost.belongsToMany(models.Category, { 
-      through: 'PostCategory', 
+    models.BlogPost.belongsToMany(models.Category, {
+      as: 'categories',
+      through: PostCategory, 
       foreignKey: 'postId',
       otherKey: 'categoryId',
     });
 
     models.Category.belongsToMany(models.BlogPost, {
-      through: 'PostCategory', 
+      as: 'posts',
+      through: PostCategory, 
       foreignKey: 'categoryId',
       otherKey: 'postId',
     });

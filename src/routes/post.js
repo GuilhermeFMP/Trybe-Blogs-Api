@@ -10,4 +10,10 @@ postRoute.post(
   postController.create,
 );
 
+postRoute.get(
+  '/',
+  userTokenVerify.authToken,
+  postController.getAll,
+);
+
 module.exports = postRoute;

@@ -1,5 +1,24 @@
-const { BlogPost, PostCategory, Category } = require('../models');
+const { BlogPost, PostCategory, Category, User } = require('../models');
 const { decodeToken } = require('../utils/token');
+
+const getAll = async (userId) => {
+  const posts = await BlogPost.findAll({
+    where: { userId },
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      },
+      {
+        model: Category,
+        as: 'categories',
+        through: { attributes: [] },
+      },
+    ],
+  });
+  return posts;
+};
 
 const create = async ({ title, content, categoryIds }, token) => {
   const categories = await Category.findAll({ where: { id: categoryIds } });
@@ -24,4 +43,5 @@ const create = async ({ title, content, categoryIds }, token) => {
 
 module.exports = {
   create,
+  getAll,
 };
