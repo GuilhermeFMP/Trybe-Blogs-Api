@@ -26,7 +26,14 @@ const validateToken = (token) => {
   }
 };
 
+const decodeToken = (token) => {
+  if (!token) throw new Error('Token not found');
+  const decode = jwt.decode(token, JWT_SECRET);
+  return decode;
+};
+
 module.exports = {
   generateToken,
   validateToken,
+  decodeToken,
 };
