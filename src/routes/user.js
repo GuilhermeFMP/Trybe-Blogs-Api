@@ -21,4 +21,10 @@ userRoute.post(
   userController.create,
 );
 
+userRoute.delete(
+  '/me',
+  userTokenVerify.authToken,
+  userController.deleteUser,
+);
+
 module.exports = userRoute;
