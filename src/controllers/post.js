@@ -10,6 +10,18 @@ const getAll = async (req, res) => {
   }
 };
 
+const getById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user.id;
+    const posts = await postService.getById(userId, id);
+    if (!posts) return res.status(404).json({ message: 'Post does not exist' });
+    return res.status(200).json(posts);
+  } catch (err) {
+    return res.status(401).json({ message: err.message });
+  }
+};
+
 const create = async (req, res) => {
   try {
     const token = req.headers.authorization;
@@ -23,4 +35,5 @@ const create = async (req, res) => {
 module.exports = {
   create,
   getAll,
+  getById,
 };

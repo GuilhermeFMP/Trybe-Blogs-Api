@@ -20,6 +20,25 @@ const getAll = async (userId) => {
   return posts;
 };
 
+const getById = async (userId, id) => {
+  const posts = await BlogPost.findOne({
+    where: { userId, id },
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      },
+      {
+        model: Category,
+        as: 'categories',
+        through: { attributes: [] },
+      },
+    ],
+  });
+  return posts;
+};
+
 const create = async ({ title, content, categoryIds }, token) => {
   const categories = await Category.findAll({ where: { id: categoryIds } });
   if (categories.length !== categoryIds.length) {
@@ -44,4 +63,5 @@ const create = async ({ title, content, categoryIds }, token) => {
 module.exports = {
   create,
   getAll,
+  getById,
 };

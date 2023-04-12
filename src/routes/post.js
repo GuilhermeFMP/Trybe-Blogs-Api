@@ -16,4 +16,10 @@ postRoute.get(
   postController.getAll,
 );
 
+postRoute.get(
+  '/:id',
+  userTokenVerify.authToken,
+  postController.getById,
+);
+
 module.exports = postRoute;
