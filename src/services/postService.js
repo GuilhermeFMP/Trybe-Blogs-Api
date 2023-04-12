@@ -39,6 +39,11 @@ const getById = async (userId, id) => {
   return posts;
 };
 
+const getByIdAll = async (id) => {
+  const post = await BlogPost.findOne({ where: { id } });
+  return post;
+};
+
 const create = async ({ title, content, categoryIds }, token) => {
   const categories = await Category.findAll({ where: { id: categoryIds } });
   if (categories.length !== categoryIds.length) {
@@ -81,9 +86,20 @@ const editPost = async (userId, id, title, content) => {
   return posts;
 };
 
+const deletePost = async (userId, id) => {
+  try {
+    const deleted = await BlogPost.destroy({ where: { userId, id } });
+    return deleted;
+  } catch (err) {
+    return err;
+  }
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   editPost,
+  deletePost,
+  getByIdAll,
 };

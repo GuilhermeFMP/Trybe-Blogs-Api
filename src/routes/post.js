@@ -30,4 +30,10 @@ postRoute.put(
   postController.editPost,
 );
 
+postRoute.delete(
+  '/:id',
+  userTokenVerify.authToken,
+  postController.deletePost,
+);
+
 module.exports = postRoute;
